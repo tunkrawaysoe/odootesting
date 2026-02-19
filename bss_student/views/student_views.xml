@@ -1,0 +1,15 @@
+<odoo>
+    <record id="view_bss_student_list" model="ir.ui.view">
+        <field name="name">bss.student.list</field>
+        <field name="model">bss.student</field>
+        <field name="arch" type="xml">
+            <list string="Students">
+                <field name="student_number"/>
+                <field name="name"/>
+                <field name="class_id"/>
+                <field name="subject_ids"/>
+                <field name="contact_id"/>
+            </list>
+        </field>
+    </record>
+</odoo>

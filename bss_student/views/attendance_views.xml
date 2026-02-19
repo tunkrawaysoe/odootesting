@@ -1,0 +1,13 @@
+<odoo>
+    <record id="view_bss_attendance_list" model="ir.ui.view">
+        <field name="name">bss.attendance.list</field>
+        <field name="model">bss.attendance</field>
+        <field name="arch" type="xml">
+            <list string="Attendance">
+                <field name="attendance_number"/>
+                <field name="student_id"/>
+                <field name="class_id"/>
+            </list>
+        </field>
+    </record>
+</odoo>

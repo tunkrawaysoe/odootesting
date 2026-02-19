@@ -1,0 +1,40 @@
+<odoo>
+    <!-- Main menu for BSS -->
+    <menuitem id="menu_bss_main" name="BSS" sequence="10"/>
+
+    <!-- Actions -->
+    <record id="action_bss_student" model="ir.actions.act_window">
+        <field name="name">Students</field>
+        <field name="res_model">bss.student</field>
+        <field name="view_mode">list,form</field>
+        <field name="help" type="html">
+            <p class="oe_view_nocontent_create">
+                Click to create a new student.
+            </p>
+        </field>
+    </record>
+
+    <record id="action_bss_class" model="ir.actions.act_window">
+        <field name="name">Classes</field>
+        <field name="res_model">bss.class</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <record id="action_bss_subject" model="ir.actions.act_window">
+        <field name="name">Subjects</field>
+        <field name="res_model">bss.subject</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <record id="action_bss_attendance" model="ir.actions.act_window">
+        <field name="name">Attendance</field>
+        <field name="res_model">bss.attendance</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <!-- Submenus -->
+    <menuitem id="menu_bss_student" name="Students" parent="menu_bss_main" action="action_bss_student" sequence="10"/>
+    <menuitem id="menu_bss_class" name="Classes" parent="menu_bss_main" action="action_bss_class" sequence="20"/>
+    <menuitem id="menu_bss_subject" name="Subjects" parent="menu_bss_main" action="action_bss_subject" sequence="30"/>
+    <menuitem id="menu_bss_attendance" name="Attendance" parent="menu_bss_main" action="action_bss_attendance" sequence="40"/>
+</odoo>

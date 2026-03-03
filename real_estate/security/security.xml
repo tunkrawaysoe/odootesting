@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Groups (no category_id to avoid version issues) -->
+    <record id="group_estate_user" model="res.groups">
+        <field name="name">Estate User</field>
+    </record>
+
+    <record id="group_estate_manager" model="res.groups">
+        <field name="name">Estate Manager</field>
+        <field name="implied_ids" eval="[(4, ref('real_estate.group_estate_user'))]"/>
+    </record>
+
+</odoo>

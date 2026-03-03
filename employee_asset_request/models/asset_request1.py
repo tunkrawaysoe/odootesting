@@ -13,7 +13,7 @@ class EmployeeAssetRequest(models.Model):
         "hr.employee",
         string="Employee",
         required=True,
-        default=lambda self: self.env.user.employee_id,
+        default=lambda self: self.env.user.employee_id or False,
         tracking=True
     )
 
@@ -79,12 +79,18 @@ class EmployeeAssetRequest(models.Model):
     # Actions
     def action_submit(self):
         for rec in self:
+            if rec.state != "draft":
+                raise ValidationError("Only draft requests can be submitted.")
+            if not rec.employee_id:
+                raise ValidationError(
+                    "Your user is not linked to an Employee. Ask HR to link your user to an employee record."
+                )
             if not rec.manager_id or not rec.manager_id.user_id:
                 raise ValidationError(
                     "Employee must have a manager with a linked user."
                 )
             rec.state = "submitted"
-            
+
             note = (
                 f"📌 Asset Request Submitted:\n"
                 f"Employee: {rec.employee_id.name}\n"
@@ -110,6 +116,10 @@ class EmployeeAssetRequest(models.Model):
                 raise ValidationError(
                     "Only submitted requests can be approved."
                 )
+
+            # Close pending manager to-do activities created on submit
+            rec.activity_feedback("mail.mail_activity_data_todo")
+
             rec.state = "approved"
             # Open assignment wizard
             return {
@@ -132,22 +142,21 @@ class EmployeeAssetRequest(models.Model):
                 raise ValidationError(
                     "Only the assigned manager can reject this request."
                 )
+            if rec.state != "submitted":
+                raise ValidationError("Only submitted requests can be rejected.")
+
+            # Close pending manager to-do activities created on submit
+            rec.activity_feedback("mail.mail_activity_data_todo")
+
             rec.state = "rejected"
 
-    def action_assign(self):
-        for rec in self:
-            if rec.state != "approved":
-                raise ValidationError(
-                    "Only approved requests can be assigned."
-                )
-            rec.state = "assigned"
-            rec.assignment_date = fields.Date.today()
-            
     def action_open_assignment_wizard(self):
         self.ensure_one()
 
         if self.state != 'approved':
-            return
+            raise ValidationError("Only approved requests can be assigned.")
+        if not self.is_current_manager:
+            raise ValidationError("Only the assigned manager can assign assets.")
 
         return {
             'type': 'ir.actions.act_window',
@@ -158,6 +167,8 @@ class EmployeeAssetRequest(models.Model):
             'context': {
                 'default_request_id': self.id,
                 'default_employee_id': self.employee_id.id,
+                'default_asset_type': self.asset_type,
+                'default_quantity': self.quantity,
             }
         }
 

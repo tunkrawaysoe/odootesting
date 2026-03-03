@@ -1,0 +1,22 @@
+.o_dashboard_main {
+    .card {
+        transition: transform 0.2s ease;
+        &:hover {
+            transform: scale(1.02);
+        }
+    }
+}
+.o_dash_container {
+    .o_group_box {
+        min-height: 250px;
+        background: transparent;
+    }
+    .o_card {
+        cursor: pointer;
+        background: white;
+        &:hover {
+            background-color: #f8f9fa;
+        }
+    }
+    .extra-small { font-size: 10px; }
+}

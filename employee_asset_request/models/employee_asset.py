@@ -32,10 +32,10 @@ class EmployeeAsset(models.Model):
     request_count = fields.Integer(
         compute="_compute_request_count", string="Requests"
     )
-
-    request_id = fields.Many2one(
-        'employee.asset.request',
-        string="Asset Request"
+    
+    _unique_serial_number = models.Constraint(
+        'UNIQUE(serial_number)',
+        'Serial number must be unique.'
     )
 
     # Compute request count
@@ -66,4 +66,4 @@ class EmployeeAsset(models.Model):
 
     def action_retire(self):
         self.write({"state": "retired"})
-
+    

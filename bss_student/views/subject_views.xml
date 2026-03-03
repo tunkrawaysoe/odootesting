@@ -9,7 +9,6 @@
                     <sheet>
                         <group>
                             <field name="name"/>
-                            <field name="code"/>
                             <field name="description"/>
                         </group>
                     </sheet>
@@ -24,7 +23,6 @@
             <field name="arch" type="xml">
                 <list string="Subjects">
                     <field name="name"/>
-                    <field name="code"/>
                 </list>
             </field>
         </record>

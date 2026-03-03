@@ -1,12 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    <!-- Normal User Group -->
-    <record id="group_bss_student_user" model="res.groups">
-        <field name="name">BSS Student User</field>
+    <record id="group_student_user" model="res.groups">
+        <field name="name">Student User</field>
     </record>
 
-    <!-- Administrator Group -->
-    <record id="group_bss_student_admin" model="res.groups">
-        <field name="name">BSS Student Admin</field>
-        <field name="implied_ids" eval="[(4, ref('base.group_system'))]"/>
+    <record id="group_student_admin" model="res.groups">
+        <field name="name">Student Admin</field>
+        <field name="implied_ids" eval="[(4, ref('group_student_user'))]"/>
     </record>
 </odoo>

@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- ==========================================
+         STUDENT USER RULES (READ ONLY)
+         - Can ONLY read own student + own attendance
+         - Cannot create/write/delete anything
+         ========================================== -->
+
+    <record id="rule_student_self" model="ir.rule">
+        <field name="name">Student: See Own Profile</field>
+        <field name="model_id" ref="bss_student.model_bss_student"/>
+        <field name="domain_force">[('user_id', '=', user.id)]</field>
+        <field name="groups" eval="[(4, ref('group_student_user'))]"/>
+
+        <!-- IMPORTANT: READ ONLY -->
+        <field name="perm_read" eval="1"/>
+        <field name="perm_create" eval="0"/>
+        <field name="perm_write" eval="0"/>
+        <field name="perm_unlink" eval="0"/>
+    </record>
+
+    <record id="rule_attendance_self" model="ir.rule">
+        <field name="name">Attendance: See Own</field>
+        <field name="model_id" ref="bss_student.model_bss_attendance"/>
+        <field name="domain_force">[('student_id.user_id', '=', user.id)]</field>
+        <field name="groups" eval="[(4, ref('group_student_user'))]"/>
+
+        <!-- IMPORTANT: READ ONLY -->
+        <field name="perm_read" eval="1"/>
+        <field name="perm_create" eval="0"/>
+        <field name="perm_write" eval="0"/>
+        <field name="perm_unlink" eval="0"/>
+    </record>
+
+
+    <!-- ==========================================
+         STUDENT ADMIN RULES (FULL ACCESS)
+         - Full control for admin group
+         - This ensures admin is never restricted
+         ========================================== -->
+
+    <record id="rule_student_admin_all_students" model="ir.rule">
+        <field name="name">Student Admin: All Students</field>
+        <field name="model_id" ref="bss_student.model_bss_student"/>
+        <field name="domain_force">[(1,'=',1)]</field>
+        <field name="groups" eval="[(4, ref('group_student_admin'))]"/>
+
+        <field name="perm_read" eval="1"/>
+        <field name="perm_create" eval="1"/>
+        <field name="perm_write" eval="1"/>
+        <field name="perm_unlink" eval="1"/>
+    </record>
+
+    <record id="rule_attendance_admin_all" model="ir.rule">
+        <field name="name">Student Admin: All Attendance</field>
+        <field name="model_id" ref="bss_student.model_bss_attendance"/>
+        <field name="domain_force">[(1,'=',1)]</field>
+        <field name="groups" eval="[(4, ref('group_student_admin'))]"/>
+
+        <field name="perm_read" eval="1"/>
+        <field name="perm_create" eval="1"/>
+        <field name="perm_write" eval="1"/>
+        <field name="perm_unlink" eval="1"/>
+    </record>
+
+    <record id="rule_class_admin_all" model="ir.rule">
+        <field name="name">Student Admin: All Classes</field>
+        <field name="model_id" ref="bss_student.model_bss_class"/>
+        <field name="domain_force">[(1,'=',1)]</field>
+        <field name="groups" eval="[(4, ref('group_student_admin'))]"/>
+
+        <field name="perm_read" eval="1"/>
+        <field name="perm_create" eval="1"/>
+        <field name="perm_write" eval="1"/>
+        <field name="perm_unlink" eval="1"/>
+    </record>
+
+    <record id="rule_subject_admin_all" model="ir.rule">
+        <field name="name">Student Admin: All Subjects</field>
+        <field name="model_id" ref="bss_student.model_bss_subject"/>
+        <field name="domain_force">[(1,'=',1)]</field>
+        <field name="groups" eval="[(4, ref('group_student_admin'))]"/>
+
+        <field name="perm_read" eval="1"/>
+        <field name="perm_create" eval="1"/>
+        <field name="perm_write" eval="1"/>
+        <field name="perm_unlink" eval="1"/>
+    </record>
+
+</odoo>

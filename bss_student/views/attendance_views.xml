@@ -1,13 +1,39 @@
 <odoo>
-    <record id="view_bss_attendance_list" model="ir.ui.view">
-        <field name="name">bss.attendance.list</field>
-        <field name="model">bss.attendance</field>
-        <field name="arch" type="xml">
-            <list string="Attendance">
-                <field name="attendance_number"/>
-                <field name="student_id"/>
-                <field name="class_id"/>
-            </list>
-        </field>
-    </record>
+    <data>
+        <!-- Attendance Form View -->
+        <record id="view_bss_attendance_form" model="ir.ui.view">
+            <field name="name">bss.attendance.form</field>
+            <field name="model">bss.attendance</field>
+            <field name="arch" type="xml">
+                <form string="Attendance">
+                    <sheet>
+                        <group>
+                            <field name="attendance_number" readonly="1"/>
+                            <field name="student_id"/>
+                            <field name="class_id" readonly="1"/>
+                            <field name="date"/>
+                            <field name="status"/>
+                            <field name="notes"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- Attendance Tree/List View -->
+        <record id="view_bss_attendance_tree" model="ir.ui.view">
+            <field name="name">bss.attendance.list</field>
+            <field name="model">bss.attendance</field>
+            <field name="arch" type="xml">
+                <list string="Attendance Records">
+                    <field name="attendance_number"/>
+                    <field name="student_id"/>
+                    <field name="class_id" readonly="1"/>
+                    <field name="date"/>
+                    <field name="status"/>
+                </list>
+            </field>
+        </record>
+
+    </data>
 </odoo>

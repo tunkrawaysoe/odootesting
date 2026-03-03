@@ -1,11 +1,33 @@
 <odoo>
-    <record id="view_bss_subject_list" model="ir.ui.view">
-        <field name="name">bss.subject.list</field>
-        <field name="model">bss.subject</field>
-        <field name="arch" type="xml">
-            <list string="Subjects">
-                <field name="name"/>
-            </list>
-        </field>
-    </record>
+    <data>
+        <!-- Subject Form View -->
+        <record id="view_bss_subject_form" model="ir.ui.view">
+            <field name="name">bss.subject.form</field>
+            <field name="model">bss.subject</field>
+            <field name="arch" type="xml">
+                <form string="Subject">
+                    <sheet>
+                        <group>
+                            <field name="name"/>
+                            <field name="code"/>
+                            <field name="description"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- Subject Tree View -->
+        <record id="view_bss_subject_tree" model="ir.ui.view">
+            <field name="name">bss.subject.list</field>
+            <field name="model">bss.subject</field>
+            <field name="arch" type="xml">
+                <list string="Subjects">
+                    <field name="name"/>
+                    <field name="code"/>
+                </list>
+            </field>
+        </record>
+
+    </data>
 </odoo>

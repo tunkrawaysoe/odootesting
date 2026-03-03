@@ -9,6 +9,7 @@
     'data': [
         'security/bss_student_security.xml',
         'security/ir.model.access.csv',
+        'security/record_rules.xml'
     ],
     'installable': True,
     'application': False,

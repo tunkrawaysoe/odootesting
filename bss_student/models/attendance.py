@@ -1,20 +1,38 @@
 from odoo import models, fields, api
 
-class Attendance(models.Model):
+
+class BssAttendance(models.Model):
     _name = "bss.attendance"
     _description = "Attendance"
 
-    name = fields.Char(string="Attendance Name")
-    attendance_number = fields.Char(string="Attendance Number", readonly=True, copy=False, default="New")
-    student_id = fields.Many2one("bss.student", string="Student")
-    class_id = fields.Many2one("bss.class", string="Class")
+    attendance_number = fields.Char(string="Attendance Number", readonly=True, copy=False)
+
+    student_id = fields.Many2one("bss.student", string="Student", required=True)
+
+    # Auto-follow student's class to prevent mismatches.
+    class_id = fields.Many2one(
+        "bss.class",
+        string="Class",
+        related="student_id.class_id",
+        store=True,
+        readonly=True,
+    )
+
+    date = fields.Date(string="Date", default=fields.Date.today)
+    status = fields.Selection(
+        [("present", "Present"), ("absent", "Absent"), ("late", "Late")],
+        string="Status",
+        default="present",
+    )
+    notes = fields.Text(string="Notes")
+
+    _sql_constraints = [
+        ("attendance_number_uniq", "unique(attendance_number)", "Attendance Number must be unique."),
+    ]
 
     @api.model_create_multi
     def create(self, vals_list):
-        # vals_list is a list of dictionaries, e.g., [{'name': 'Math'}, {'name': 'Science'}]
         for vals in vals_list:
-            if vals.get('attendance_number', 'New') == 'New':
-                vals['attendance_number'] = self.env['ir.sequence'].next_by_code('bss.attendance.sequence') or 'New'
-        
-        # Pass the entire list to the parent create method
-        return super(Attendance, self).create(vals_list)
+            if not vals.get("attendance_number"):
+                vals["attendance_number"] = self.env["ir.sequence"].next_by_code("bss.attendance") or "ATD/0001"
+        return super().create(vals_list)

@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="view_employee_asset_request_search" model="ir.ui.view">
+            <field name="name">employee.asset.request.search</field>
+            <field name="model">employee.asset.request</field>
+            <field name="arch" type="xml">
+                <search>
+                    <field name="name" />
+                    <field name="employee_id" />
+                    <field name="asset_type" />
+                    <field name="state" />
+                </search>
+            </field>
+        </record>
+
+        <record id="view_employee_asset_request_pivot" model="ir.ui.view">
+            <field name="name">employee.asset.request.pivot</field>
+            <field name="model">employee.asset.request</field>
+            <field name="arch" type="xml">
+                <pivot string="Asset Requests Analysis">
+                    <field name="employee_id" type="row"/>
+                    <field name="asset_type" type="row"/>
+                    <field name="state" type="col"/>
+                    <field name="quantity" type="measure"/>
+                </pivot>
+            </field>
+        </record>
+
+        <record id="view_employee_asset_request_graph" model="ir.ui.view">
+            <field name="name">employee.asset.request.graph</field>
+            <field name="model">employee.asset.request</field>
+            <field name="arch" type="xml">
+                <graph string="Asset Requests Graph">
+                    <field name="employee_id" type="row"/>
+                    <field name="quantity" type="measure"/>
+                    <field name="state" type="col"/>
+                </graph>
+            </field>
+        </record>
+
+        <record id="action_employee_asset_request_reporting" model="ir.actions.act_window">
+            <field name="name">Asset Request Reporting</field>
+            <field name="res_model">employee.asset.request</field>
+            <field name="view_mode">pivot,graph,list</field>
+            <field name="search_view_id" ref="view_employee_asset_request_search"/>
+            <field name="context">{'create': False}</field>
+        </record>
+
+         <menuitem id="menu_employee_asset_request_reporting"
+              name="Reporting"
+              parent="menu_employee_asset_root"
+              action="action_employee_asset_request_reporting"
+              sequence="50"
+              groups="group_asset_manager"/>
+
+    </data>
+</odoo>

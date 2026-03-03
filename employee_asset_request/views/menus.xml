@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <data>
+    <menuitem id="menu_employee_asset_root" name="Employee Assets" sequence="10"/>
+        <menuitem id="menu_employee_assets"
+                  name="Assets"
+                  parent="menu_employee_asset_root"
+                  action="employee_asset_request.action_employee_asset"
+                  sequence="1"/>
+        <menuitem id="menu_asset_requests"
+                  name="Asset Requests"
+                  parent="menu_employee_asset_root"
+                  action="employee_asset_request.action_asset_request"
+                  sequence="2"/>
+
+  </data>
+</odoo>

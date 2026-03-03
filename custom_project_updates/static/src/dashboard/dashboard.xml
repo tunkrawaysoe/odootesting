@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+
+<t t-name="custom_project_updates.ProjectDashboard" owl="1">
+    <div class="o_dash_container p-4 bg-light h-100 overflow-auto">
+
+        <div class="mb-4">
+            <div class="d-flex justify-content-center mb-3">
+                <div class="w-50 position-relative">
+                    <input type="text"
+                           class="form-control ps-5"
+                           placeholder="Search tasks..."
+                           t-on-input="onSearchInput"/>
+                    <i class="fa fa-search position-absolute top-50 start-0 translate-middle ps-3 text-muted"/>
+                </div>
+            </div>
+
+            <div class="d-flex justify-content-center gap-2">
+                <button class="btn"
+                        t-att-class="state.activeTab==='change' ? 'btn-primary' : 'btn-outline-primary'"
+                        t-on-click="() => this.setTab('change')">
+                    Change Request
+                </button>
+
+                <button class="btn"
+                        t-att-class="state.activeTab==='progress' ? 'btn-warning' : 'btn-outline-warning'"
+                        t-on-click="() => this.setTab('progress')">
+                    Progress
+                </button>
+
+                <button class="btn"
+                        t-att-class="state.activeTab==='done' ? 'btn-success' : 'btn-outline-success'"
+                        t-on-click="() => this.setTab('done')">
+                    Done
+                </button>
+            </div>
+        </div>
+
+        <div class="row g-4">
+
+            <t t-foreach="getVisibleGroups()" t-as="gKey" t-key="gKey">
+                <div class="col-lg-4 col-md-6">
+                    <div class="bg-white rounded shadow-sm p-3 h-100 d-flex flex-column position-relative">
+
+                        <span
+                            t-att-class="{
+                                'badge rounded-pill position-absolute top-0 end-0 m-2 shadow-sm px-3 text-white': true,
+                                'bg-danger': gKey==='overdue'||gKey==='urgent',
+                                'bg-warning': gKey==='due_soon',
+                                'bg-success': gKey==='done',
+                                'bg-primary': !['overdue','urgent','due_soon','done'].includes(gKey)
+                            }">
+                            <t t-esc="state.groups[gKey].length"/>
+                        </span>
+
+                        <div class="mb-3">
+                            <h5 class="m-0 fw-bold text-capitalize text-primary"
+                                style="cursor:pointer"
+                                t-on-click="() => this.openGroup(gKey)">
+                                <t t-esc="gKey.replace('_',' ')"/>
+                            </h5>
+                        </div>
+
+                        <div class="flex-grow-1">
+                            <t t-foreach="state.groups[gKey].slice(0, 2)" t-as="task" t-key="task.id">
+                                <div class="card mb-2 p-2 position-relative"
+                                     style="cursor:pointer"
+                                     t-att-class="{
+                                        'border-danger': gKey==='overdue'||gKey==='urgent',
+                                        'border-warning': gKey==='due_soon',
+                                        'border-success': gKey==='done'
+                                     }"
+                                     t-on-click="() => this.openTask(task.id)">
+
+                                    <span
+                                        t-att-class="{
+                                            'badge position-absolute top-0 end-0 m-1 small rounded-pill text-capitalize text-white': true,
+                                            'bg-danger': gKey==='overdue'||gKey==='urgent',
+                                            'bg-warning': gKey==='due_soon',
+                                            'bg-success': gKey==='done',
+                                            'bg-primary': !['overdue','urgent','due_soon','done'].includes(gKey)
+                                        }">
+                                        <t t-esc="gKey.replace('_',' ')"/>
+                                    </span>
+
+                                    <div class="fw-bold small pe-5">
+                                        <t t-esc="task.name"/>
+                                    </div>
+
+                                    <div class="text-muted small d-flex justify-content-between">
+                                        <span>
+                                            <t t-esc="task.project_id[1]"/>
+                                        </span>
+
+                                        <span t-if="task.date_deadline"
+                                              t-att-class="{
+                                                  'text-danger': gKey==='overdue'||gKey==='urgent',
+                                                  'text-warning': gKey==='due_soon',
+                                                  'text-success': gKey==='done',
+                                                  'text-primary': !['overdue','urgent','due_soon','done'].includes(gKey)
+                                              }">
+                                            <t t-esc="task.date_deadline"/>
+                                        </span>
+                                    </div>
+                                </div>
+                            </t>
+                        </div>
+
+                    </div>
+                </div>
+            </t>
+
+        </div>
+
+    </div>
+</t>
+
+</templates>

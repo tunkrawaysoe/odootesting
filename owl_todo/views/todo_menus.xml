@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="action_todo_owl" model="ir.actions.client">
+        <field name="name">Todo App</field>
+        <field name="tag">owl_todo.action_todo_app</field>
+    </record>
+
+    <record id="action_counter_owl" model="ir.actions.client">
+        <field name="name">Counter App</field>
+        <field name="tag">owl_todo.action_counter_app</field>
+    </record>
+
+    <menuitem id="menu_todo_root" name="OWL Todo" sequence="10" />
+    <menuitem id="menu_todo_board" name="My Tasks" parent="menu_todo_root" action="action_todo_owl" />
+    <menuitem id="menu_counter_page"
+        name="Counter Tool"
+        parent="menu_todo_root"
+        action="action_counter_owl"
+        sequence="20" />
+</odoo>

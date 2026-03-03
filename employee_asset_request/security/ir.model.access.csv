@@ -1,0 +1,6 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_asset_request_employee,Asset Request Employee,model_employee_asset_request,group_asset_employee,1,1,1,0
+access_asset_request_manager,Asset Request Manager,model_employee_asset_request,group_asset_manager,1,1,1,1
+access_employee_asset_employee,Employee Asset User,model_employee_asset,group_asset_employee,1,0,0,0
+access_employee_asset_manager,Employee Asset Manager,model_employee_asset,group_asset_manager,1,1,1,1
+access_asset_assignment_wizard_manager,Asset Assignment Wizard Manager,model_asset_assignment_wizard,group_asset_manager,1,1,1,1

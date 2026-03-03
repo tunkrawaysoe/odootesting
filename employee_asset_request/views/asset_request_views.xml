@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <data>
+    <!-- ===================================================== -->
+        <!-- LIST VIEW -->
+        <!-- ===================================================== -->
+        <record id="view_asset_request_list" model="ir.ui.view">
+            <field name="name">employee.asset.request.list</field>
+            <field name="model">employee.asset.request</field>
+            <field name="arch" type="xml">
+                <list string="Asset Requests">
+                    <field name="name" />
+                    <field name="employee_id" />
+                    <field name="manager_id" />
+                    <field name="asset_type" />
+                    <field name="quantity" />
+                    <field name="state" />
+                </list>
+            </field>
+        </record>
+        <!-- ===================================================== -->
+        <!-- FORM VIEW -->
+        <!-- ===================================================== -->
+        <record id="view_asset_request_form" model="ir.ui.view">
+            <field name="name">employee.asset.request.form</field>
+            <field name="model">employee.asset.request</field>
+            <field name="arch" type="xml">
+                <form string="Asset Request">
+                    <header>
+                        <!-- Submit -->
+                        <button name="action_submit"
+                            type="object"
+                            string="Submit"
+                            invisible="state != 'draft'"
+                            class="btn-primary" />
+                        <!-- Approve -->
+                        <button name="action_approve"
+                            type="object"
+                            string="Approve"
+                            invisible="state != 'submitted' or not is_current_manager"
+                            class="btn-success" />
+                        <!-- Reject -->
+                        <button name="action_reject"
+                            type="object"
+                            string="Reject"
+                            invisible="state != 'submitted' or not is_current_manager"
+                            class="btn-danger" />
+                        <!-- Assign -->
+                        <button name="action_open_assignment_wizard"
+                            type="object"
+                            string="Assign Assets"
+                            invisible="state != 'approved' or not is_current_manager"
+                            class="btn-primary" />
+                        <field name="state" widget="statusbar" />
+                    </header>
+                    <sheet>
+                        <group string="Request Info">
+                            <field name="name" readonly="1" />
+                            <field name="employee_id" readonly="1" />
+                            <field name="manager_id" readonly="1" />
+                            <field name="asset_type" readonly="state != 'draft'" />
+                            <field name="quantity" readonly="state != 'draft'" />
+                            <field name="reason" readonly="state != 'draft'" />
+                        </group>
+                        <group string="Assignment Details">
+                            <field name="assignment_date" readonly="1" />
+                            <field name="asset_ids" readonly="1" />
+                        </group>
+                    </sheet>
+                    <chatter />
+                </form>
+            </field>
+        </record>
+        <!-- ===================================================== -->
+        <!-- PIVOT VIEW -->
+        <!-- ===================================================== -->
+        <record id="view_asset_request_pivot" model="ir.ui.view">
+            <field name="name">employee.asset.request.pivot</field>
+            <field name="model">employee.asset.request</field>
+            <field name="arch" type="xml">
+                <pivot string="Asset Requests Pivot">
+                    <!-- Rows: group by employee, asset type, state -->
+                    <field name="employee_id" type="row"/>
+                    <field name="asset_type" type="row"/>
+                    <field name="state" type="row"/>
+                    <!-- Columns: group by assignment date -->
+                    <field name="assignment_date" type="col"/>
+                    <!-- Measures: quantity -->
+                    <field name="quantity" type="measure"/>
+                </pivot>
+            </field>
+        </record>
+        <!-- ===================================================== -->
+    <!-- GRAPH VIEW -->
+    <!-- ===================================================== -->
+    <record id="view_asset_request_graph" model="ir.ui.view">
+        <field name="name">employee.asset.request.graph</field>
+        <field name="model">employee.asset.request</field>
+        <field name="arch" type="xml">
+            <graph string="Asset Requests Graph" type="bar">
+                <!-- Rows: group by employee -->
+                <field name="employee_id" type="row"/>
+                <!-- Columns: group by state -->
+                <field name="state" type="col"/>
+                <!-- Measures: quantity -->
+                <field name="quantity" type="measure"/>
+            </graph>
+        </field>
+    </record>
+        <!-- ===================================================== -->
+        <!-- ACTION -->
+        <!-- ===================================================== -->
+        <record id="action_asset_request" model="ir.actions.act_window">
+            <field name="name">Asset Requests</field>
+            <field name="res_model">employee.asset.request</field>
+            <field name="view_mode">list,form,pivot,graph</field>
+        </record>
+  </data>
+</odoo>

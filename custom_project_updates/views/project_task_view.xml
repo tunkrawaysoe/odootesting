@@ -1,0 +1,20 @@
+
+
+<odoo>
+    <record id="action_project_dashboard" model="ir.actions.client">
+        <field name="name">Project Analytics</field>
+        <field name="tag">custom_project_updates.dashboard</field>
+    </record>
+    <menuitem id="menu_project_dashboard_custom" name="My Dashboard" parent="project.menu_main_pm"
+        action="action_project_dashboard" sequence="1" />
+    <record id="view_task_form2_inherit_urgent" model="ir.ui.view">
+        <field name="name">project.task.form.inherit.urgent</field>
+        <field name="model">project.task</field>
+        <field name="inherit_id" ref="project.view_task_form2" />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='user_ids']" position="after">
+                <field name="is_urgent" widget="boolean_toggle" />
+            </xpath>
+        </field>
+    </record>
+</odoo>

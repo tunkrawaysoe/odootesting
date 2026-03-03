@@ -1,0 +1,50 @@
+<odoo>
+    <record id="view_partner_form_member_management" model="ir.ui.view">
+        <field name="name">res.partner.form.member.management</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+
+            <!-- Header: Status + Accept/Reject -->
+            <xpath expr="//form//sheet" position="before">
+                <header>
+                    <field name="state" widget="statusbar"
+                           statusbar_visible="draft,submitted,accepted,rejected"/>
+
+                    <button name="action_accept_member"
+                            type="object"
+                            string="Accept"
+                            class="btn-primary"
+                            invisible="state != 'submitted'"/>
+
+                    <button name="action_reject_member"
+                            type="object"
+                            string="Reject"
+                            class="btn-secondary"
+                            invisible="state != 'submitted'"/>
+                </header>
+            </xpath>
+
+            <!-- Put fields inside Notebook tab -->
+            <xpath expr="//form//sheet//notebook" position="inside">
+                <page string="Member Information">
+                    <group col="2">
+                        <group string="Basic Information">
+                            <field name="dob"/>
+                            <field name="gender"/>
+                            <field name="marital_status"/>
+                            <field name="member_type"/>
+                            <field name="image_1920" widget="image"/>
+                        </group>
+
+                        <group string="Registration Security">
+                            <field name="password"/>
+                            <field name="confirm_password"/>
+                        </group>
+                    </group>
+                </page>
+            </xpath>
+
+        </field>
+    </record>
+</odoo>

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+    <t t-name="owl_todo.TodoApp">
+        <div class="o_todo_container p-5 bg-light h-100">
+            <div class="card shadow mx-auto" style="max-width: 500px;">
+                <div class="card-header bg-primary text-white">
+                    <h4 class="mb-0">Todo List</h4>
+                </div>
+                <div class="card-body">
+                    <div class="input-group mb-3">
+                        <input type="text" class="form-control" 
+                               t-model="state.newTask" 
+                               placeholder="Add task..."
+                               t-on-keydown="(ev) => ev.key === 'Enter' &amp;&amp; this.addTask()"/>
+                        <button class="btn btn-primary" t-on-click="this.addTask">
+                            <i class="fa fa-plus"/>
+                        </button>
+                    </div>
+
+                    <ul class="list-group">
+                        <t t-foreach="state.tasks" t-as="task" t-key="task.id">
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                <div>
+                                    <input type="checkbox" class="form-check-input me-2"
+                                           t-att-checked="task.isCompleted"
+                                           t-on-change="() => this.toggleTask(task.id)"/>
+                                    <span t-att-class="task.isCompleted ? 'text-decoration-line-through text-muted' : ''">
+                                        <t t-esc="task.text"/>
+                                    </span>
+                                </div>
+                                <button class="btn btn-sm btn-outline-danger border-0" 
+                                        t-on-click="() => this.deleteTask(task.id)">
+                                    <i class="fa fa-trash"/>
+                                </button>
+                            </li>
+                        </t>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </t>
+</templates>
